@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 describe('test scenario', ()=>{
-    it("test case 1", ()=>{
+    // Test case 1
+    it("test case 1", ()=>{ 
         cy.visit("https://demo.productionready.io/#/")
         cy.get(".navbar-brand").contains("conduit")
         cy.get(".navbar-nav .nav-link").contains("Home")
@@ -13,8 +14,8 @@ describe('test scenario', ()=>{
         cy.get(".sidebar p")
         cy.get(".sidebar .tag-list").contains("codebaseShow")
         cy.get(".sidebar .tag-list .tag-default").last()
-
     })
+    // paragrah test case 
     it('test case 2', ()=>{
         cy.visit("https://demo.productionready.io/#/")
         cy.get(".preview-link").first().click()
@@ -27,8 +28,8 @@ describe('test scenario', ()=>{
         cy.get(".article-content .ng-binding p")
         cy.get(".article-content .tag-list li").first()
         cy.get(".article-content .tag-list li").last()
-
     })
+    // sign in page test case
     it('test case 3', ()=>{
         cy.visit("https://demo.productionready.io/#/")
         cy.get(".navbar-nav .nav-link").contains("Sign in").click()
@@ -37,6 +38,5 @@ describe('test scenario', ()=>{
         cy.get(".form-group .ng-valid-email")
         cy.get('.form-group [type="password"]')
         cy.get(".ng-valid-email .pull-xs-right ")
-
     })
 })
