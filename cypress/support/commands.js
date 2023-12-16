@@ -23,3 +23,12 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('login',()=>{
+    // i used fixture instead of sending email and password from test file . 
+    cy.fixture("./example.json").then((data)=>{
+        cy.get("#Email").clear().type(data.email);
+        cy.get("#Password").clear().type(data.password);
+        cy.get(".login-button").click();
+    })
+})
