@@ -1,40 +1,46 @@
 /// <reference types="cypress" />
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
+import createAccountActions from "../../../../pageObject/createAccountPage/actions.cy";
+import sheardActions from "../../../../pageObject/sheard/actions.cy";
+import createAccountAssertions from "../../../../pageObject/createAccountPage/assertions.cy";
 
 const firstName = "Sojood"
 const lastName = "Sweiti"
 const email = "sojood"+Math.floor(Math.random()*100)+"@gmail.com"
 const password = "sojoood@1998"
-const confirmPassword = "sojoood@1998"
+//const confirmPassword = "sojoood@1998"
+
+const sheardAction = new sheardActions
+const createAccountAction = new createAccountActions
+const createAccountAssertion = new createAccountAssertions 
 
 Given("The user can navigate the website", ()=>{
-    cy.visit("https://magento.softwaretestingboard.com/customer/account/create/")
+    sheardAction.openCreateAccountPage()
 })
 
 When("The user enter first name {string}", ()=>{
-    cy.get("#firstname").type(firstName)
+    createAccountAction.enterFirstNameInInput(firstName)
 })
 
 When("The user enter last name {string}", ()=>{
-    cy.get("#lastname").type(lastName)
+    createAccountAction.enterLastNameInInput(lastName)
 })
 
 When("The user enter email {string}",()=>{
-    cy.get("#email_address").type(email)
+    createAccountAction.enterEmailInInput(email)
 })
 
 When("The user enter password {string}",()=>{
-    cy.get("#password").type(password)
+    createAccountAction.enterPasswordInInput(password)
 })
 
 When("The user enter confirm password {string}",()=>{
-    cy.get("#password-confirmation").type(confirmPassword)
+   createAccountAction.enterConfirmPasswordInInput(password)
 })
 
 When("The user click on create account button", ()=>{
-    cy.get(".submit").click()
+    createAccountAction.clickOnCreateButton()
 })
 
 Then("{string} message will be shown",(message)=>{
-    cy.get(".page.messages").should("contain",message)
-})
+    createAccountAssertion.checkAlertMessageContainValue(message)})

@@ -1,34 +1,35 @@
+/// <reference types="cypress" />
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
+import loginPageActions from "../../../../pageObject/loginPage/actions.cy";
+import loginPageAssertions from "../../../../pageObject/loginPage/assertions.cy";
+import sheardActions from "../../../../pageObject/sheard/actions.cy";
+import sheardAssertions from "../../../../pageObject/sheard/assertions.cy";
 
-Given("The user navigated to magento website",()=>{
-    cy.visit("/");
-});
+const email = "CypressUser@gmail.com";
+const password = "test@123";
 
-Then("The logo should be visible",()=>{
-    cy.get(".logo").should("be.visible");
-});
+const loginAction = new loginPageActions
+const loginAssertion = new loginPageAssertions
+const sheardAction = new sheardActions
+const sheardAssertion = new sheardAssertions
 
-Given("The user search for shirt product",()=>{
-    cy.get("#search").type("shirt {enter}");
-});
+Given("The user navigated to login page in magento website",()=>{
+    sheardAction.openMagentoWebsite()
+})
 
-When("The user choose the product X",()=>{
-    cy.get(".product-items li").first().click();
-});
+When("Enter email in email input field", () => {
+    loginAction.typeInEmailInputField(email)
+})
 
-When("The user choose the size and color for product X",()=>{
-    cy.get(".swatch-attribute.size").contains("M").click();
-    cy.get(".swatch-attribute.color").find(".swatch-option").last().click();
-});
+When("Enter password in password input field", () => {
+    loginAction.typeInPasswordInputField(password)
+})
 
-When("The user click on Add to cart button",()=>{
-    cy.get("#product-addtocart-button").click();
-});
+When("Click on sign in button", () => {
+    loginAction.clickOnSignInButton()
+})
 
-Then("The product should be added to the cart successfully",()=>{
-    cy.get("[role=alert]").should("contain","You added Radiant Tee to your shopping cart.")
-});
-
-Then("The counter of the cart should be visible",()=>{
-    cy.get(".counter-number").should("be.visible")
-});
+Then("The user should be redirected to My Account", () => {
+    loginAssertion.checkAlertMessageContainValue("Welcome, cypress user!")
+    sheardAssertion.checkPageTitleContainValue("My Account")
+})
